@@ -1,6 +1,6 @@
 import { get } from 'lodash';
 import * as routeStates  from '../../constants/routeStates.const';
-import * as roles  from '../../constants/roles.consts';
+import { ANONIM }  from '../../constants/roles.consts';
 
 export default class PermissionService {
 	constructor ($rootScope, $state, firebaseService, toastr) {
@@ -15,7 +15,7 @@ export default class PermissionService {
 
 	init (event, toState, toParams, fromState) {
 				let _get = get;
-        let roles = _get(toState, 'data.roles') || roles.ANONIM;
+        let roles = _get(toState, 'data.roles') || ANONIM;
         if( !roles.length ){
           this.$rootScope.error = "Access undefined for this state";
           this.toastr.error(this.$rootScope.error);
