@@ -5,14 +5,14 @@
         <div class="panel panel-info">
           <div class="panel-heading groups">
             <span ng-repeat="group in manager.groups">
-              <button class="btn btn-primary btn-xs" ng-click="manager.filter = {}; manager.filter.group = group">{{group}}</button>
+              <button class="btn btn-primary btn-xs" ng-click="manager.choiceGroup(group)">{{group}}</button>
             </span>
-            <button class="btn btn-primary btn-xs" ng-click="manager.filter = {}">All</button>
+            <button class="btn btn-primary btn-xs" ng-click="manager.choiceGroup()">All</button>
           </div>
           {{manager.filter}}
           <div class="panel-body users">
             <span class="user inline-block" ng-repeat="user in manager.users | filter:manager.filter">
-              <button class="btn btn-primary btn-sm" ng-click="manager.filter = {}; manager.filter.firstName = user.firstName">{{user.firstName}}</button>
+              <button class="btn btn-primary btn-sm" ng-click="manager.choiceUser(user.uid)">{{user.firstName + " " + user.lastName}}</button>
             </span>
           </div>
         </div>
@@ -20,17 +20,17 @@
     </div>
     <div class="col-md-9">
       <div class="btn-group">
-          <label class="btn btn-primary" ng-model="manager.statusFilter.status" uib-btn-radio="'inprogress'">In progress</label>
-          <label class="btn btn-success" ng-model="manager.statusFilter.status" uib-btn-radio="'confirmed'">Confirmed</label>
-          <label class="btn btn-danger" ng-model="manager.statusFilter.status" uib-btn-radio="'rejected'">Rejected</label>
-          <label class="btn btn-info" ng-model="manager.statusFilter.status" uib-btn-radio="''">All</label>
+          <label class="btn btn-primary" ng-model="manager.statusFilter.status" uib-btn-radio="'inprogress'" ng-class="{active: manager.buttonFilter == 'inprogress'}" ng-click="manager.choiceButtonFilter('inprogress')">In progress</label>
+          <label class="btn btn-success" ng-model="manager.statusFilter.status" uib-btn-radio="'confirmed'" ng-class="{active: manager.buttonFilter == 'confirmed'}" ng-click="manager.choiceButtonFilter('confirmed')">Confirmed</label>
+          <label class="btn btn-danger" ng-model="manager.statusFilter.status" uib-btn-radio="'rejected'" ng-class="{active: manager.buttonFilter == 'rejected'}" ng-click="manager.choiceButtonFilter('rejected')">Rejected</label>
+          <label class="btn btn-info" ng-model="manager.statusFilter.status" uib-btn-radio="''" ng-class="{active: manager.buttonFilter == ''}" ng-click="manager.choiceButtonFilter('')">All</label>
       </div>
       <hr>
       <div class="row">
         <div class="vacations" ng-repeat="user in manager.users | filter:manager.filter">
           <div class="col-md-4" ng-repeat="item in user.vacations.list | filter:manager.statusFilter">
             <div class="panel panel-info">
-              <div class="panel-heading">{{user.firstName}}</div>
+              <div class="panel-heading">{{user.firstName + " " + user.lastName}}</div>
               <div class="panel-body">
                 <div class="vacation-data well">
                   <span>from {{item.startDate | date:'dd-MM-yyyy'}}</span>

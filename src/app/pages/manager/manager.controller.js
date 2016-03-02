@@ -10,7 +10,8 @@ export default class ManagerController {
     this.users = userList;
     this.groups = groups;
     this.filter;
-    this.statusFilter = { status: "" };
+    this.statusFilter = { status: "inprogress" };
+    this.buttonFilter = 'inprogress';
 
   }
 
@@ -21,6 +22,18 @@ export default class ManagerController {
     rejectVacation(user, id) {
      find(user.vacations.list, { id: id }).status = status.REJECTED;
       this.firebaseService.updateUserData(user);
+    }
+    choiceGroup(group) {
+      this.filter = {};
+      this.filter = { group: group };
+    }
+    choiceUser(user) {
+      this.filter = {};
+      this.filter = { uid: user };
+    }
+    choiceButtonFilter(filter) {
+      this.buttonFilter = filter;
+      this.statusFilter.status = filter;
     }
 
 } 
