@@ -1,16 +1,16 @@
-<div class="container-fluid">
+<div class="container-fluid m-content">
   <div class="row">
     <div class="col-md-3">
       <div class="row">
-        <div class="panel panel-info">
-          <div class="panel-heading groups">
+        <div class="panel m-panel">
+          <div class="panel-heading m-panel-head groups">
             <span ng-repeat="group in manager.groups">
               <button class="btn btn-primary btn-xs" ng-click="manager.choiceGroup(group)">{{group}}</button>
             </span>
             <button class="btn btn-primary btn-xs" ng-click="manager.choiceGroup()">All</button>
           </div>
           {{manager.filter}}
-          <div class="panel-body users">
+          <div class="panel-body m-panel-body users">
             <span class="user inline-block" ng-repeat="user in manager.users | filter:manager.filter">
               <button class="btn btn-primary btn-sm" ng-click="manager.choiceUser(user.uid)">{{user.firstName + " " + user.lastName}}</button>
             </span>
@@ -29,9 +29,9 @@
       <div class="row">
         <div class="vacations" ng-repeat="user in manager.users | filter:manager.filter">
           <div class="col-md-4" ng-repeat="item in user.vacations.list | filter:manager.statusFilter">
-            <div class="panel panel-info">
-              <div class="panel-heading">{{user.firstName + " " + user.lastName}}</div>
-              <div class="panel-body">
+            <div class="panel m-panel">
+              <div class="panel-heading m-panel-head">{{user.firstName + " " + user.lastName}}</div>
+              <div class="panel-body m-panel-body">
                 <div class="vacation-data well">
                   <span>from {{item.startDate | date:'dd-MM-yyyy'}}</span>
                   <span>to {{item.endDate | date:'dd-MM-yyyy'}}</span>

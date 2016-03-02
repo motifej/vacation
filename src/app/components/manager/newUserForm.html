@@ -1,0 +1,102 @@
+<div class="modal-header">
+  <h3 class="modal-title">New user form</h3>
+</div>
+
+<div class="modal-body">
+  <form class="form-horizontal" name="addUserForm"  ng-submit="user.submitForm(addUserForm.$valid)" novalidate>
+    <fieldset>
+
+      <div class="form-group">
+        <div ng-class="{'has-error': addUserForm.firstName.$invalid && (user.invalidForm || addUserForm.firstName.$dirty)}">
+          <label class="col-md-4 control-label" for="firstName">First Name</label>  
+          <div class="col-md-4">
+            <input id="firstName" name="firstName" type="text" placeholder="first name..." class="form-control input-md" ng-model="user.newUser.firstName" ng-pattern="user.namePattern" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div ng-class="{'has-error': addUserForm.lastName.$invalid && (user.invalidForm || addUserForm.lastName.$dirty)}">
+          <label class="col-md-4 control-label" for="lastName">Last Name</label>  
+          <div class="col-md-4">
+            <input id="lastName" name="lastName" type="text" placeholder="last name..." class="form-control input-md" ng-model="user.newUser.lastName" ng-pattern="user.namePattern" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div ng-class="{'has-error': addUserForm.phone.$invalid && (user.invalidForm || addUserForm.phone.$dirty)}">
+          <label class="col-md-4 control-label" for="phone">Phone Number</label>
+          <div class="col-md-4">
+            <div class="input-group">
+              <input id="phone" name="phone" class="form-control bfh-phone" placeholder="phone..." type="text" ng-model="user.newUser.phone" ng-change="user.phoneChanged()" ng-minlength="10" required>
+              <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div ng-class="{'has-error': addUserForm.email.$invalid && (user.invalidForm || addUserForm.email.$dirty)}">
+          <label class="col-md-4 control-label" for="email">Email</label>
+          <div class="col-md-4">
+            <div class="input-group">
+              <input id="email" name="email" class="form-control" placeholder="email..." type="text" ng-model="user.newUser.email" ng-pattern="user.emailPattern" required>
+              <span class="input-group-addon">@</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div ng-class="{'has-error': addUserForm.userRole.$invalid && (user.invalidForm || addUserForm.userRole.$dirty)}">
+          <label class="col-md-4 control-label" for="userRole">User's role</label>
+          <div class="col-md-4">
+            <select id="userRole" name="userRole" class="form-control" ng-model="user.newUser.role" ng-options="role as role for role in user.role" required>
+              <option value="">-- chose user's role --</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div ng-class="{'has-error': addUserForm.userGroup.$invalid && (user.invalidForm || addUserForm.userGroup.$dirty)}">
+          <label class="col-md-4 control-label" for="userGroup">User's group</label>
+          <div class="col-md-4">
+            <select id="userGroup" name="userGroup" class="form-control" ng-model="user.newUser.group" ng-options="group as group for group in user.group" required>
+              <option value="">-- chose user's group --</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div ng-class="{'has-error': addUserForm.totalVacation.$invalid && (user.invalidForm || addUserForm.totalVacation.$dirty)}">
+          <label class="col-md-4 control-label" for="totalVacation">Total Vacation</label>  
+          <div class="col-md-4">
+            <input id="totalVacation" name="totalVacation" type="number" placeholder="" class="form-control input-md" ng-model="user.newUser.vacations.total" required min="0">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div ng-class="{'has-error': addUserForm.dayOff.$invalid && (user.invalidForm || addUserForm.dayOff.$dirty)}">
+          <label class="col-md-4 control-label" for="dayOff">Day Off</label>  
+          <div class="col-md-4">
+            <input id="dayOff" name="dayOff" type="number" placeholder="" class="form-control input-md" ng-model="user.newUser.vacations.dayOff" required min="0">
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="form-group">
+          <div class="col-md-8 col-md-offset-4">
+            <button type="submit" class="btn btn-primary">Add User</button>
+            <button class="btn btn-warning" type="button" ng-click="user.cancelNewUser()">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+    </fieldset>
+  </form>
+</div>

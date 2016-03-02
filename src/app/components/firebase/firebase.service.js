@@ -4,13 +4,14 @@ import * as users  from '../../constants/users.consts';
 import { API_URL } from '../../constants/api.consts';
 
 export default class FirebaseService {
-	constructor ($firebaseArray, $firebaseObject, $firebase, $firebaseAuth, $q, $rootScope, $firebaseUtils) {
+	constructor ($firebaseArray, $firebaseObject, $firebase, $firebaseAuth, $q, $rootScope, $firebaseUtils, $timeout) {
 		'ngInject';
 		this.URL = API_URL;
 		this.$firebaseObject = $firebaseObject;
 		this.$firebaseAuth = $firebaseAuth;
 		this.$firebaseArray = $firebaseArray;
 		this.$q = $q;
+		this.$timeout = $timeout;
 		this.$rootScope = $rootScope;
 		this.userStorageKey = 'authUser';
 		this.firebaseObj = new Firebase( this.URL );
@@ -48,8 +49,10 @@ export default class FirebaseService {
 		let obj = this.$firebaseUtils.toJSON;
 		let deferred = this.$q.defer();
 		let userRef = this.firebaseObj.child(this.authUser.data.uid);
+		let timeoutLoad = this.$timeout(deferred.reject, 5000);
 		this.$firebaseObject( userRef ).$loaded(
 			data => {
+				this.$timeout.cancel( timeoutLoad );
 				deferred.resolve( obj( data ) );
 				this.$rootScope.$emit(actions.USERLOADED, data);
 			},
