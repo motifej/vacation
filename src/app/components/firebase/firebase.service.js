@@ -20,14 +20,6 @@ export default class FirebaseService {
 		this.$firebaseUtils = $firebaseUtils;
 	}
 
-	_getClearArray(arr) {
-		let newArr = [];
-		angular.forEach(arr, 
-			value => newArr.push(value)
-			);
-		return newArr;
-	}
-
 	_getCurrentUid() {
 		return this.authUser.data.uid;
 	}
@@ -37,7 +29,6 @@ export default class FirebaseService {
 	}
 
 	getUsersList() {
-		let arr = this._getClearArray;
 		let deferred = this.$q.defer();
 		this.$firebaseArray( this.firebaseObj ).$loaded(
 			data =>	deferred.resolve( data ),
