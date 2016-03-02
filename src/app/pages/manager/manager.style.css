@@ -1,0 +1,33 @@
+.m-content {
+	background: url('../../../assets/images/bg-body3.jpg') no-repeat;
+	background-size: 100% auto;
+	min-height: calc(100vh - 51px);
+	padding-top: 10px;
+	background-color: black;
+	background-attachment: fixed;
+	color: white;
+}
+.m-panel {
+	color: white;
+	background-color: rgba(155, 155, 155, 0.1);
+	border: 2px solid #fff;
+}
+.m-panel-head {
+	background-color: #222;
+}
+.m-panel-body {
+	background-color: rgba(0, 0, 0, 0);
+}
+.well {
+	background-color: #222;
+}
+.m-button-black {
+	margin-bottom: 3px;
+	background-color: rgba(0, 0, 0, 0.1) !important;
+	border: 1px solid #fff;
+}
+.m-button-gray {
+	margin-bottom: 3px;
+	background-color: rgba(155, 155, 155, 0.3);
+	border: 1px solid #fff;
+}

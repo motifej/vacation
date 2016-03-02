@@ -43,22 +43,15 @@ export default class UserController {
       return;
     }
 
-
-    // list.push({
-    //   startDate: startDate,
-    //   endDate: endDate,
-    //   status: 'inprogress',
-    //   commentary: null
-    // });
-
     // this.log.debug(this.user);
-    // this.firebaseService.updateUserData(this.user);
-    // this.firebaseService.createNewVacation({
-    //   startDate: startDate,
-    //   endDate: endDate,
-    //   status: 'inprogress',
-    //   commentary: null
-    // });
+    
+    this.firebaseService.createNewVacation({
+      startDate: startDate,
+      endDate: endDate,
+      status: 'inprogress',
+      commentary: null
+    });
+
     this.vacations.push({startDate, endDate});
     // this.$scope.$emit('vacationWasSent', {startDate, endDate});
     this.toastr.success('Заявка успешно отправлена!', toastrOptions);

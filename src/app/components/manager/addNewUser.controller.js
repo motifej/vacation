@@ -30,35 +30,7 @@ export default class AddNewUserController {
 			}
     }
 
-		this.group = [
-			'.Net',
-			'Android',
-			'Business Analyst',
-			'Data Bases',
-			'Design',
-			'HR',
-			'iOS',
-			'IT',
-			'Java',
-			'JavaScript',
-			'Managers',
-			'Marketing Manager',
-			'Markup',
-			'NodeJS',
-			'Operations',
-			'PHP',
-			'Python',
-			'QA', 
-			'Ruby',
-			'Sales'
-		];
-
-		this.role = [
-			'User',
-			'Manager',
-			'Admin',
-		];
-
+		
   }
 
   activate() {};
