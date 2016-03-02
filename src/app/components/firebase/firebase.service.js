@@ -3,12 +3,13 @@ import * as actions from '../../constants/actions.const';
 import * as users  from '../../constants/users.consts';
 
 export default class FirebaseService {
-	constructor ($firebaseObject, $firebase, $firebaseAuth, $q, $rootScope, $firebaseUtils) {
+	constructor ($firebaseObject, $firebase, $firebaseAuth, $q, $rootScope, $firebaseUtils, $timeout) {
 		'ngInject';
 		this.URL = 'https://vivid-fire-3850.firebaseio.com/users';
 		this.$firebaseObject = $firebaseObject;
 		this.$firebaseAuth = $firebaseAuth;
 		this.$q = $q;
+		this.$timeout = $timeout;
 		this.$rootScope = $rootScope;
 		this.userStorageKey = 'authUser';
 		this.firebaseObj = new Firebase( this.URL );
@@ -46,8 +47,10 @@ export default class FirebaseService {
 		let obj = this.$firebaseUtils.toJSON;
 		let deferred = this.$q.defer();
 		let userRef = this.firebaseObj.child(this.authUser.data.uid);
+		let timeoutLoad = this.$timeout(deferred.reject, 5000);
 		this.$firebaseObject( userRef ).$loaded(
 			data => {
+				this.$timeout.cancel( timeoutLoad );
 				deferred.resolve( obj( data ) );
 				this.$rootScope.$emit(actions.USERLOADED, data);
 			},

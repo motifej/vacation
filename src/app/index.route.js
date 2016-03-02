@@ -21,9 +21,11 @@ export default function routerConfig ($stateProvider, $urlRouterProvider) {
     .state(states.SITE, {
         'abstract': true,
         resolve: {
-            user : function (firebaseService) {
+            user : function (firebaseService, $state) {
                 'ngIngect'
-                return firebaseService.loadUser();
+                let loadUser = firebaseService.loadUser();
+                loadUser.catch( err => $state.go(states.ERRLOAD,{err: err}) );
+                return loadUser;
             }
         }
     })
@@ -79,6 +81,17 @@ export default function routerConfig ($stateProvider, $urlRouterProvider) {
             templateUrl: 'app/pages/manager/manager.html',
             controller: 'ManagerController',
             controllerAs: 'manager'
+            }
+        }
+    })
+    .state(states.ERRLOAD, {
+        url: '/',
+        data: {
+            roles: roles.USER
+        },
+        views: {
+          'content@': {
+            templateUrl: 'app/pages/error/errorload.html'
             }
         }
     });
