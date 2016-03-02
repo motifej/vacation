@@ -1,3 +1,5 @@
+import { groups } from '../../constants/groups.consts';
+import * as roles from '../../constants/groups.consts';
 export default class AddNewUserController {
   constructor ($filter, $modal, $modalInstance, toastr) {
     'ngInject';
@@ -8,6 +10,8 @@ export default class AddNewUserController {
     this.filter = $filter;
     this.toastr = toastr;
     this.modalInstance = $modalInstance;
+    this.group = groups;
+    this.role = roles;
 
     this.newUser = {
     	firstName: '',
