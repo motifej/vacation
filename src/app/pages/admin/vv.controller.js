@@ -26,7 +26,6 @@ export default class VvController {
         return
       }else 
       {
-
         if(value.vacations.list[0].startDate >= _this.newEvent.startsAt &&
          value.vacations.list[0].startDate <= _this.newEvent.endsAt) {
 
@@ -50,6 +49,9 @@ export default class VvController {
     var _this = this;
     firebaseService.getUsersList().then( d => {
       _this.awesomeThings = d;
+
+      _this.oneThing = d[0];
+
     });
   }
 
