@@ -1,5 +1,6 @@
 import { groups } from '../../constants/groups.consts';
-import * as roles from '../../constants/roles.consts';
+import * as users from '../../constants/roles.consts';
+
 export default class AddNewUserController {
   constructor ($filter, $modal, $modalInstance, toastr) {
     'ngInject';
@@ -11,7 +12,7 @@ export default class AddNewUserController {
     this.toastr = toastr;
     this.modalInstance = $modalInstance;
     this.group = groups;
-    this.role = roles;
+    this.role = users;
 
     this.newUser = {
       firstName: '',
@@ -37,7 +38,7 @@ export default class AddNewUserController {
     
   }
 
-  activate() {};
+  activate() {}
 
   submitForm (isValid) {
     if (isValid) {
@@ -48,8 +49,8 @@ export default class AddNewUserController {
     } else {
       this.toastr.error('Not all fields are filled', 'Error');
       this.invalidForm = true;
-    };
-  };
+    }
+  }
 
   phoneChanged() {
    this.newUser.phone = this.filter('phoneFilter')(this.newUser.phone);
