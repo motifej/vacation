@@ -20,7 +20,6 @@ export default class ManagerController {
     confirmVacation(user, id) {
      find(user.vacations.list, { id: id }).status = status.CONFIRMED;
       this.firebaseService.updateUserData(user);
-      this.users = userList;
     }
     rejectVacation(user, id) {
      find(user.vacations.list, { id: id }).status = status.REJECTED;
