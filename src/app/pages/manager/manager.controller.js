@@ -3,7 +3,7 @@
  import { groups } from '../../constants/groups.consts';
 
 export default class ManagerController {
-  constructor ($scope, $timeout, firebaseService, userList) {
+  constructor ($scope, $timeout, firebaseService, userList, $filter) {
     'ngInject';
 
     this.firebaseService = firebaseService;
@@ -14,6 +14,34 @@ export default class ManagerController {
     this.groups = groups;
     this.filter = {};
     this.statusFilter = { status: "inprogress" };
+    this.invalidForm = false;
+    this.namePattern = '[a-zA-Zа-яА-Я]+';
+    this.emailPattern = '\\w+.?\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,6}';
+    this.filterPhone = $filter;
+    this.toastr = toastr;
+    this.modalInstance = $modalInstance;
+
+    this.newUser = {
+      firstName: '',
+      lastName: '',
+      role: '',
+      group: '',
+      phone: '',
+      email: '',
+      uid: '',
+      vacations: {
+        total: null,
+        dayOff: null,
+        list: [{
+          id: null,
+          startDate: '',
+          endDate: '',
+          status: '',
+          comments: ''
+        }]
+      }
+    }
+
 
   }
 
@@ -34,5 +62,26 @@ export default class ManagerController {
     choiceButtonFilter(filter) {
       this.statusFilter.status = filter;
     }
+
+    submitForm (isValid) {
+    if (isValid) {
+      this.invalidForm = false;
+      this.modalInstance.close();
+      this.toastr.success('New user is added', 'Success');
+      // push newUser to your array of USERS!
+    } else {
+      this.toastr.error('Not all fields are filled', 'Error');
+      this.invalidForm = true;
+    };
+  };
+
+  phoneChanged() {
+   this.newUser.phone = this.filterPhone('phoneFilter')(this.newUser.phone);
+  }
+
+  cancelNewUser() {
+    this.modalInstance.dismiss('cancel');
+  }
+
 
 } 
