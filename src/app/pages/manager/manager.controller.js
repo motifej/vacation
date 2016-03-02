@@ -1,47 +1,21 @@
  import { find } from 'lodash';
  import * as status from '../../constants/status.consts';
  import { groups } from '../../constants/groups.consts';
+ import AddNewUserController from './addNewUser.controller'
 
 export default class ManagerController {
-  constructor ($scope, $timeout, firebaseService, userList, $filter) {
+  constructor ($scope, $timeout, firebaseService, userList, $modal) {
     'ngInject';
 
     this.firebaseService = firebaseService;
-    this.users = userList.map(user => {
+    this.users = userList/*.map(user => {
       user.vacations.list = user.vacations.list.filter(item => item.startDate && item.endDate);
       return user;
-    });
+    })*/;
     this.groups = groups;
     this.filter = {};
     this.statusFilter = { status: "inprogress" };
-    this.invalidForm = false;
-    this.namePattern = '[a-zA-Zа-яА-Я]+';
-    this.emailPattern = '\\w+.?\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,6}';
-    this.filterPhone = $filter;
-    this.toastr = toastr;
-    this.modalInstance = $modalInstance;
-
-    this.newUser = {
-      firstName: '',
-      lastName: '',
-      role: '',
-      group: '',
-      phone: '',
-      email: '',
-      uid: '',
-      vacations: {
-        total: null,
-        dayOff: null,
-        list: [{
-          id: null,
-          startDate: '',
-          endDate: '',
-          status: '',
-          comments: ''
-        }]
-      }
-    }
-
+    this.modal = $modal;
 
   }
 
@@ -62,26 +36,17 @@ export default class ManagerController {
     choiceButtonFilter(filter) {
       this.statusFilter.status = filter;
     }
-
-    submitForm (isValid) {
-    if (isValid) {
-      this.invalidForm = false;
-      this.modalInstance.close();
-      this.toastr.success('New user is added', 'Success');
-      // push newUser to your array of USERS!
-    } else {
-      this.toastr.error('Not all fields are filled', 'Error');
-      this.invalidForm = true;
-    };
-  };
-
-  phoneChanged() {
-   this.newUser.phone = this.filterPhone('phoneFilter')(this.newUser.phone);
+    openNewUserForm() {
+    this.modal.open({
+      templateUrl: '../app/pages/manager/newUserForm.html',
+      controller: AddNewUserController,
+      controllerAs: 'user',
+      resolve: {
+        items: function () {
+          return this;
+        }
+      }
+    });
   }
-
-  cancelNewUser() {
-    this.modalInstance.dismiss('cancel');
-  }
-
 
 } 

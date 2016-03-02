@@ -25,10 +25,11 @@
           <label class="btn m-button-gray" ng-class="{'m-button-black': manager.statusFilter.status == 'rejected'}" ng-click="manager.choiceButtonFilter('rejected')">Rejected</label>
           <label class="btn m-button-gray" ng-class="{'m-button-black': !manager.statusFilter.status}" ng-click="manager.choiceButtonFilter()">All</label>
       </div>
+      <button class="btn" ng-click="manager.openNewUserForm()">Add User</button>
       <hr>
       <div class="row">
         <div class="vacations" ng-repeat="user in manager.users | filter:manager.filter">
-          <div class="col-md-4" ng-repeat="item in user.vacations.list | filter:manager.statusFilter">
+          <div class="col-md-4" ng-repeat="(key, item) in user.vacations.list | statusFilter:'status':manager.statusFilter.status">
             <div class="panel m-panel">
               <div class="panel-heading m-panel-head">{{user.firstName + " " + user.lastName}}</div>
               <div class="panel-body m-panel-body">

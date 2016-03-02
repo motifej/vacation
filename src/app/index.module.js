@@ -13,6 +13,8 @@ import dropdownListDirective from './components/dropdown/vv.dropdown.directive';
 import VvController  from './pages/admin/vv.controller';
 import ManagerController  from './pages/manager/manager.controller';
 import userFilterVacation from './cores/filters/userFilterVacation.filter';
+import phoneFilter from '../app/components/manager/phoneFilter.filter';
+import statusFilter from './cores/filters/status.filter';
 
 
 
@@ -24,6 +26,8 @@ angular.module('vacation', ['ngAnimate', 'ngMessages', 'ui.router', 'ui.bootstra
   .service('firebaseService', FirebaseService)
   .service('permission', PermissionService)
   .filter('userFilterVacation', userFilterVacation)
+  .filter('phoneFilter', phoneFilter)
+  .filter('statusFilter', statusFilter)
   .controller('LoginController', LoginController)
   .controller('ManagerController', ManagerController)
   .controller('UserController', UserController)
