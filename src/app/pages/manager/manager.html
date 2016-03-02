@@ -20,10 +20,10 @@
     </div>
     <div class="col-md-9">
       <div class="btn-group">
-          <label class="btn btn-primary" ng-model="manager.statusFilter.status" uib-btn-radio="'inprogress'" ng-class="{active: manager.buttonFilter == 'inprogress'}" ng-click="manager.choiceButtonFilter('inprogress')">In progress</label>
-          <label class="btn btn-success" ng-model="manager.statusFilter.status" uib-btn-radio="'confirmed'" ng-class="{active: manager.buttonFilter == 'confirmed'}" ng-click="manager.choiceButtonFilter('confirmed')">Confirmed</label>
-          <label class="btn btn-danger" ng-model="manager.statusFilter.status" uib-btn-radio="'rejected'" ng-class="{active: manager.buttonFilter == 'rejected'}" ng-click="manager.choiceButtonFilter('rejected')">Rejected</label>
-          <label class="btn btn-info" ng-model="manager.statusFilter.status" uib-btn-radio="''" ng-class="{active: manager.buttonFilter == ''}" ng-click="manager.choiceButtonFilter('')">All</label>
+          <label class="btn btn-primary" ng-class="{active: manager.statusFilter.status == 'inprogress'}" ng-click="manager.choiceButtonFilter('inprogress')">In progress</label>
+          <label class="btn btn-success" ng-class="{active: manager.statusFilter.status == 'confirmed'}" ng-click="manager.choiceButtonFilter('confirmed')">Confirmed</label>
+          <label class="btn btn-danger" ng-class="{active: manager.statusFilter.status == 'rejected'}" ng-click="manager.choiceButtonFilter('rejected')">Rejected</label>
+          <label class="btn btn-info" ng-class="{active: !manager.statusFilter.status}" ng-click="manager.choiceButtonFilter()">All</label>
       </div>
       <hr>
       <div class="row">

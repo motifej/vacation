@@ -7,11 +7,13 @@ export default class ManagerController {
     'ngInject';
 
     this.firebaseService = firebaseService;
-    this.users = userList;
+    this.users = userList.map(user => {
+      user.vacations.list = user.vacations.list.filter(item => item.startDate && item.endDate);
+      return user;
+    });
     this.groups = groups;
-    this.filter;
+    this.filter = {};
     this.statusFilter = { status: "inprogress" };
-    this.buttonFilter = 'inprogress';
 
   }
 
@@ -24,15 +26,12 @@ export default class ManagerController {
       this.firebaseService.updateUserData(user);
     }
     choiceGroup(group) {
-      this.filter = {};
       this.filter = { group: group };
     }
     choiceUser(user) {
-      this.filter = {};
       this.filter = { uid: user };
     }
     choiceButtonFilter(filter) {
-      this.buttonFilter = filter;
       this.statusFilter.status = filter;
     }
 

@@ -1,0 +1,22 @@
+.m-content {
+	background: url('../../../assets/images/bg-body3.jpg') no-repeat;
+	background-size: 100% auto;
+	min-height: calc(100vh - 51px);
+	padding-top: 10px;
+	background-color: black;
+	background-attachment: fixed;
+}
+.m-panel {
+	color: white;
+	background-color: rgba(0, 0, 0, 0.4);
+	border: 2px solid #222;
+}
+.m-panel-head {
+	background-color: #222;
+}
+.m-panel-body {
+	background-color: rgba(0, 0, 0, 0);
+}
+.well {
+	background-color: #222;
+}
