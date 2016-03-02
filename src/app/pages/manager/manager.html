@@ -1,0 +1,51 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="row">
+        <div class="panel panel-info">
+          <div class="panel-heading groups">
+            <span ng-repeat="group in manager.groups">
+              <button class="btn btn-primary btn-xs" ng-click="manager.filter = {}; manager.filter.group = group">{{group}}</button>
+            </span>
+            <button class="btn btn-primary btn-xs" ng-click="manager.filter = {}">All</button>
+          </div>
+          {{manager.filter}}
+          <div class="panel-body users">
+            <span class="user inline-block" ng-repeat="user in manager.users | filter:manager.filter">
+              <button class="btn btn-primary btn-sm" ng-click="manager.filter = {}; manager.filter.firstName = user.firstName">{{user.firstName}}</button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="btn-group">
+          <label class="btn btn-primary" ng-model="manager.statusFilter.status" uib-btn-radio="'inprogress'">In progress</label>
+          <label class="btn btn-success" ng-model="manager.statusFilter.status" uib-btn-radio="'confirmed'">Confirmed</label>
+          <label class="btn btn-danger" ng-model="manager.statusFilter.status" uib-btn-radio="'rejected'">Rejected</label>
+          <label class="btn btn-info" ng-model="manager.statusFilter.status" uib-btn-radio="''">All</label>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="vacations" ng-repeat="user in manager.users | filter:manager.filter">
+          <div class="col-md-4" ng-repeat="item in user.vacations.list | filter:manager.statusFilter">
+            <div class="panel panel-info">
+              <div class="panel-heading">{{user.firstName}}</div>
+              <div class="panel-body">
+                <div class="vacation-data well">
+                  <span>from {{item.startDate | date:'dd-MM-yyyy'}}</span>
+                  <span>to {{item.endDate | date:'dd-MM-yyyy'}}</span>
+                </div>
+                <div class="buttons-wrapper">
+                  <button ng-disabled="item.status!='inprogress'" class="btn btn-primary col-md-offset-2" ng-click="manager.confirmVacation(user, item.id)">Confirm</button>
+                  <button ng-disabled="item.status=='rejected'" class="btn btn-danger col-md-offset-2" ng-click="manager.rejectVacation(user, item.id)">Reject</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

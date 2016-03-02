@@ -1,0 +1,52 @@
+.login-page-wrapper {
+	background: url('../../../assets/images/bg-body3.jpg') no-repeat;
+	background-size: cover;
+	color: #fff;
+  height: calc(100vh - 51px);
+}
+
+.login-form-wrap{
+	margin-top: 15%;
+	border: 2px solid #fff;
+	border-radius: 4px;
+}
+.login-form-legend{
+	color: #fff;
+}
+.ng-invalid.ng-touched {
+	border: solid red 1px;
+}
+
+.glyphicon.spinning {
+    animation: spin 1s infinite linear;
+    -webkit-animation: spin2 1s infinite linear;
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+.login-btn{
+	background: black;
+  border: solid #fff 1px;
+}
+
+.logout__dropdown{
+	cursor: pointer;
+	background: rgba(0,0,0,0.7);
+	text-align: center;
+	font-weight: bold;
+	letter-spacing: 2px;
+	line-height: 30px;
+	color: #9d9d9d;
+}
+.logout__dropdown:hover{
+	background: rgba(0,0,0,1);
+	color: #fff;
+}

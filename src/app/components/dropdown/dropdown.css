@@ -1,0 +1,8 @@
+.dropdown-scroll {
+    overflow: auto;
+    height: 300px;
+}
+.mypanel {
+    max-width: 300px;
+    margin-top:15px;
+}

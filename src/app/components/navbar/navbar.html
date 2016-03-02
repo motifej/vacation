@@ -1,0 +1,34 @@
+<nav class="navbar navbar-static-top navbar-inverse main-navbar">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="http://chisw.com" target="_blank">
+        <img src="assets/images/logo.png" class="text centr">
+      </a>
+    </div>
+
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li ui-sref-active="active" ng-if='vm.user.role'>
+          <a ui-sref={{vm.routeStates.HOME}}>Home</a>
+        </li>
+        <li ui-sref-active="active" ng-if='vm.isAdmin()'>
+          <a ui-sref={{vm.routeStates.ADMIN}}>admin</a>
+        </li>
+        <li ui-sref-active="active" ng-if='vm.isManager()'>
+          <a ui-sref={{vm.routeStates.MANAGER}}>manager</a>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right acme-navbar-text" ng-if='vm.user.uid'>
+        <li class="dropdown" dropdown>
+            <a href="#" class="dropdown-toggle" dropdown-toggle>Welcome, &nbsp; <span>{{vm.user.firstName + " " + vm.user.lastName}}</span></a>
+            <div  class="dropdown-menu logout__dropdown"
+                  ng-click="vm.logOut()" 
+                  ui-sref={{vm.routeStates.LOGIN}}>
+                <span>LogOut</span>
+            </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

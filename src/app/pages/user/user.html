@@ -1,0 +1,46 @@
+<div class="user-wrapper">
+<div class="container user  col-md-6 col-md-offset-3">
+    <form name="userForm" role="form" class="user-form col-md-12" novalidate ng-submit='userCtrl.submitHandler(userForm.startDate.$viewValue, userForm.endDate.$viewValue)'>
+        <legend class="user-form__title">Заявка на отпуск</legend>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="">Дата начала отпуска</label>
+                <vac-datepicker class="datepicker"
+                    name="startDate"
+                    ng-model="startDate"
+                    min-date="minStartDate"
+                >
+                </vac-datepicker>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="">Дата окончания отпуска</label>
+                <vac-datepicker class="datepicker"
+                    name="endDate"
+                    ng-model="endDate"
+                    min-date="minEndDate"
+                >
+                </vac-datepicker>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="chosen">Выбрано дней</label>
+                <input type="text" id="chosen" class="form-control user__total-days" disabled
+                    ng-value="calcDays()">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="available">Доступно дней отпуска</label>
+                <input type="text" id="available" class="form-control user__left-days" disabled
+                    ng-value="userCtrl.user.vacations.total || 0">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="dayoff">Доступно dayoff</label>
+                <input type="text" id="dayoff" class="form-control user__left-days" disabled
+                    ng-value="userCtrl.user.vacations.dayOff || 0">
+            </div>
+        </div>
+        <button type="submit" class="btn user-form__btn">Отправить</button>
+    </form>
+
+</div>
+</div>
