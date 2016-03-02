@@ -9,7 +9,7 @@
 
   ---
 ## Create own branch
-  git branch "your branch name"
+  git checkout "your branch name"
   
   ---
 ### Name of branches
