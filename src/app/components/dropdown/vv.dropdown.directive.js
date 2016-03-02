@@ -23,7 +23,7 @@ export default function dropdownListDirective() {
               scope.search = item.firstName +" "+ item.lastName;
               scope.showEvents = [
                   {
-                    title: "sdfsd fsdf sdf ", // The title of the event 
+                    title: scope.search, // The title of the event 
                     type: 'info', // The type of the event (determines its color). Can be important, warning, info, inverse, success or special 
                     startsAt: new Date(item.vacations.list[0].startDate), // A javascript date object for when the event starts 
                     endsAt: new Date(item.vacations.list[0].endDate), // Optional - a javascript date object for when the event ends 
