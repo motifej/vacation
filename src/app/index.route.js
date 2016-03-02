@@ -1,7 +1,7 @@
 import * as roles  from './constants/roles.consts';
 import * as states  from './constants/routeStates.const';
 
-export default function routerConfig ($stateProvider, $urlRouterProvider) {
+export default function routerConfig ($stateProvider,$locationProvider, $urlRouterProvider) {
     'ngInject';
 
     $stateProvider
@@ -94,6 +94,11 @@ export default function routerConfig ($stateProvider, $urlRouterProvider) {
             templateUrl: 'app/pages/error/errorload.html'
             }
         }
+    });
+
+    $locationProvider.html5Mode({
+      enabled: true,
+      requireBase: false
     });
 
     $urlRouterProvider.otherwise('/');
