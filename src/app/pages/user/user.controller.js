@@ -1,3 +1,5 @@
+import {_remove} from 'lodash';
+
 export default class UserController {
   constructor ($scope, $log, firebaseService, moment, user) {
     'ngInject';
@@ -24,6 +26,7 @@ export default class UserController {
 
     this.user = user;
     this.log = $log;
+    this.firebaseService = firebaseService;
     this.submitHandler = function (startDate, endDate) {
       if ($scope.userForm.$invalid) return;
       let list = this.user.vacations.list;
@@ -39,6 +42,11 @@ export default class UserController {
       $scope.$emit('vacationWasSent', {startDate: startDate, endDate: endDate});
     }
     // $scope.$on('vacationWasSent', (event, dates) => console.log(dates));
+  }
+
+  deleteVacation(item) {
+    _remove(this.user.vacations.list,
+      elem => item.id == elem.id);
   }
 
 }

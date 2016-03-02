@@ -12,6 +12,7 @@ import DatepickerDirective from './components/datepicker/datepicker.directive';
 import dropdownListDirective from './components/dropdown/vv.dropdown.directive';
 import VvController  from './pages/admin/vv.controller';
 import ManagerController  from './pages/manager/manager.controller';
+import userFilterVacation from './cores/filters/userFilterVacation.filter';
 
 
 
@@ -22,6 +23,7 @@ angular.module('vacation', ['ngAnimate', 'ngMessages', 'ui.router', 'ui.bootstra
   .run(runBlock)
   .service('firebaseService', FirebaseService)
   .service('permission', PermissionService)
+  .filter('userFilterVacation', userFilterVacation)
   .controller('LoginController', LoginController)
   .controller('ManagerController', ManagerController)
   .controller('UserController', UserController)
