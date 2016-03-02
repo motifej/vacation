@@ -1,5 +1,5 @@
 import { groups } from '../../constants/groups.consts';
-import * as roles from '../../constants/groups.consts';
+import * as roles from '../../constants/roles.consts';
 export default class AddNewUserController {
   constructor ($filter, $modal, $modalInstance, toastr) {
     'ngInject';
@@ -14,41 +14,41 @@ export default class AddNewUserController {
     this.role = roles;
 
     this.newUser = {
-    	firstName: '',
-			lastName: '',
-			role: '',
-			group: '',
-			phone: '',
-			email: '',
-			uid: '',
-			vacations: {
-				total: null,
-				dayOff: null,
-				list: [{
-					id: null,
-					startDate: '',
-					endDate: '',
-					status: '',
-					comments: ''
-				}]
-			}
+      firstName: '',
+      lastName: '',
+      role: '',
+      group: '',
+      phone: '',
+      email: '',
+      uid: '',
+      vacations: {
+        total: null,
+        dayOff: null,
+        list: [{
+          id: null,
+          startDate: '',
+          endDate: '',
+          status: '',
+          comments: ''
+        }]
+      }
     }
 
-		
+    
   }
 
   activate() {};
 
   submitForm (isValid) {
-  	if (isValid) {
-  		this.invalidForm = false;
-  		this.modalInstance.close();
-  		this.toastr.success('New user is added', 'Success');
-  		// push newUser to your array of USERS!
-  	} else {
-  		this.toastr.error('Not all fields are filled', 'Error');
-  		this.invalidForm = true;
-  	};
+    if (isValid) {
+      this.invalidForm = false;
+      this.modalInstance.close();
+      this.toastr.success('New user is added', 'Success');
+      // push newUser to your array of USERS!
+    } else {
+      this.toastr.error('Not all fields are filled', 'Error');
+      this.invalidForm = true;
+    };
   };
 
   phoneChanged() {
@@ -56,7 +56,7 @@ export default class AddNewUserController {
   }
 
   cancelNewUser() {
-  	this.modalInstance.dismiss('cancel');
+    this.modalInstance.dismiss('cancel');
   }
 
 }
