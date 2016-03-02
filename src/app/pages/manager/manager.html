@@ -5,14 +5,14 @@
         <div class="panel m-panel">
           <div class="panel-heading m-panel-head groups">
             <span ng-repeat="group in manager.groups">
-              <button class="btn btn-primary btn-xs" ng-click="manager.choiceGroup(group)">{{group}}</button>
+              <button class="btn btn-primary btn-xs m-button-black" ng-click="manager.choiceGroup(group)">{{group}}</button>
             </span>
             <button class="btn btn-primary btn-xs" ng-click="manager.choiceGroup()">All</button>
           </div>
           {{manager.filter}}
           <div class="panel-body m-panel-body users">
             <span class="user inline-block" ng-repeat="user in manager.users | filter:manager.filter">
-              <button class="btn btn-primary btn-sm" ng-click="manager.choiceUser(user.uid)">{{user.firstName + " " + user.lastName}}</button>
+              <button class="btn btn-primary btn-sm m-button-gray" ng-click="manager.choiceUser(user.uid)">{{user.firstName + " " + user.lastName}}</button>
             </span>
           </div>
         </div>
@@ -20,10 +20,10 @@
     </div>
     <div class="col-md-9">
       <div class="btn-group">
-          <label class="btn btn-primary" ng-class="{active: manager.statusFilter.status == 'inprogress'}" ng-click="manager.choiceButtonFilter('inprogress')">In progress</label>
-          <label class="btn btn-success" ng-class="{active: manager.statusFilter.status == 'confirmed'}" ng-click="manager.choiceButtonFilter('confirmed')">Confirmed</label>
-          <label class="btn btn-danger" ng-class="{active: manager.statusFilter.status == 'rejected'}" ng-click="manager.choiceButtonFilter('rejected')">Rejected</label>
-          <label class="btn btn-info" ng-class="{active: !manager.statusFilter.status}" ng-click="manager.choiceButtonFilter()">All</label>
+          <label class="btn m-button-gray" ng-class="{'m-button-black': manager.statusFilter.status == 'inprogress'}" ng-click="manager.choiceButtonFilter('inprogress')">In progress</label>
+          <label class="btn m-button-gray" ng-class="{'m-button-black': manager.statusFilter.status == 'confirmed'}" ng-click="manager.choiceButtonFilter('confirmed')">Confirmed</label>
+          <label class="btn m-button-gray" ng-class="{'m-button-black': manager.statusFilter.status == 'rejected'}" ng-click="manager.choiceButtonFilter('rejected')">Rejected</label>
+          <label class="btn m-button-gray" ng-class="{'m-button-black': !manager.statusFilter.status}" ng-click="manager.choiceButtonFilter()">All</label>
       </div>
       <hr>
       <div class="row">
