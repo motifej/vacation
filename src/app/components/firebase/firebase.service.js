@@ -17,14 +17,6 @@ export default class FirebaseService {
 		this.$firebaseUtils = $firebaseUtils;
 	}
 
-	_getClearObj(obj) {
-		let newObj = {};
-		angular.forEach(obj, 
-			(value, key) => newObj[key] = value
-		);	
-		return newObj;
-	}
-
 	_getClearArray(arr) {
 		let newArr = [];
 		angular.forEach(arr, 
@@ -51,7 +43,7 @@ export default class FirebaseService {
 	}
 
 	loadUser() {
-		let obj = this._getClearObj;
+		let obj = this.$firebaseUtils.toJSON;
 		let deferred = this.$q.defer();
 		let userRef = this.firebaseObj.child(this.authUser.data.uid);
 		this.$firebaseObject( userRef ).$loaded(
