@@ -21,6 +21,7 @@ export default class UserController {
 
   activate(scope) {
 
+<<<<<<< HEAD
     let list = this.user.vacations.list;
 
     if (list) {
@@ -29,6 +30,8 @@ export default class UserController {
       }
     }
 
+=======
+>>>>>>> fc81da87da955e5e9ab7bdd80dcfa28af4fb6a61
     scope.$watch('startDate', function() {
       if (scope.endDate <= scope.startDate) scope.endDate = scope.startDate;
       scope.minEndDate = scope.startDate;
@@ -38,8 +41,10 @@ export default class UserController {
 
   submitHandler(startDate, endDate) {
 
+
     let sDate = new Date(startDate).getTime();
     let eDate = new Date(endDate).getTime();
+
     let vm = this;
     let toastrOptions = {progressBar: false};
     let vacation;
@@ -74,7 +79,9 @@ export default class UserController {
           return true;
         }
       });
+
       return result.length !== 0;
+
     }
   }
 
