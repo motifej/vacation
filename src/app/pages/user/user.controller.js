@@ -22,16 +22,17 @@ export default class UserController {
   }
 
   activate(scope) {
+
     scope.$watch('startDate', function() {
-      scope.endDate = scope.startDate;
+      if (scope.endDate <= scope.startDate) scope.endDate = scope.startDate;
       scope.minEndDate = scope.startDate;
     });
 
   }
 
   submitHandler(startDate, endDate) {
-    let vm = this;
 
+    let vm = this;
     let toastrOptions = {progressBar: false};
 
     this.log.debug(this.vacations);
@@ -43,40 +44,27 @@ export default class UserController {
       return;
     }
 
-
-    // list.push({
-    //   startDate: startDate,
-    //   endDate: endDate,
-    //   status: 'inprogress',
-    //   commentary: null
-    // });
-
-    // this.log.debug(this.user);
-    // this.firebaseService.updateUserData(this.user);
-    // this.firebaseService.createNewVacation({
-    //   startDate: startDate,
-    //   endDate: endDate,
-    //   status: 'inprogress',
-    //   commentary: null
-    // });
+    this.firebaseService.createNewVacation({
+      startDate: startDate,
+      endDate: endDate,
+      status: 'inprogress',
+      commentary: null
+    });
     this.vacations.push({startDate, endDate});
-    // this.$scope.$emit('vacationWasSent', {startDate, endDate});
     this.toastr.success('Заявка успешно отправлена!', toastrOptions);
 
     function isCrossingIntervals(dateIntervals) {
 
       if(dateIntervals.length === 0) return false;
-      // console.log(vm.moment("2016-03-01").from(vm.moment("2016-03-04")));
 
-      let test =  !!dateIntervals.filter(function(item) {
-
-        // console.log(parseInt(vm.moment(startDate).from(vm.moment(startDate))
-
-        if (vm.moment(startDate).from(vm.moment(startDate) && startDate <= item.endDate)) return true;
-        // return endDate <= item.endDate;
+      let arr = dateIntervals.filter(function(item) {
+        return (vm.moment(startDate).diff(vm.moment(item.startDate)) >= 0
+              && vm.moment(item.endDate).diff(vm.moment(startDate)) >= 0
+              || vm.moment(item.startDate).diff(vm.moment(endDate)) <= 0
+              && vm.moment(item.endDate).diff(vm.moment(endDate)) >= 0);
       });
 
-      return test;
+      return arr.length !== 0;
     }
   }
 
