@@ -4,7 +4,7 @@
  import AddNewUserController from './addNewUser.controller'
 
 export default class ManagerController {
-  constructor ($scope, $timeout, firebaseService, userList, $modal) {
+  constructor ($scope, $timeout, firebaseService, userList, $modal, moment) {
     'ngInject';
 
     this.firebaseService = firebaseService;
@@ -20,7 +20,10 @@ export default class ManagerController {
   }
 
     confirmVacation(user, id) {
-     find(user.vacations.list, { id: id }).status = status.CONFIRMED;
+     var vacation = find(user.vacations.list, { id: id });
+     vacation.status = status.CONFIRMED;
+     moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5]);
+     console.log(moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5]));
       this.firebaseService.updateUserData(user);
     }
     rejectVacation(user, id) {
