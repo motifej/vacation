@@ -40,7 +40,7 @@ export default class FirebaseService {
 		let obj = this.$firebaseUtils.toJSON;
 		let deferred = this.$q.defer();
 		let userRef = this.firebaseObj.child(this.authUser.data.uid);
-		let timeoutLoad = this.$timeout(deferred.reject, 5000);
+		let timeoutLoad = this.$timeout(deferred.reject, 10000);
 		this.$firebaseObject( userRef ).$loaded(
 			data => {
 				this.$timeout.cancel( timeoutLoad );
@@ -70,6 +70,11 @@ export default class FirebaseService {
 		let refNewVacation = ref.push();
 		let newVacation = angular.extend(data, {id: refNewVacation.key()});
 		refNewVacation.set(newVacation);
+	}
+
+	removeVacation(id) {
+		let ref = this.firebaseObj.child(this.authUser.data.uid).child('vacations').child('list');
+		ref.child(id).remove();
 	}
 
 	createUserByEmail(newUser) {
