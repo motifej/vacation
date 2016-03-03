@@ -20,8 +20,9 @@ export default class VvController {
     let {startsAt, endsAt} = this.newEvent;
 
     angular.forEach(this.awesomeThings, function (value) {
-      if ( 'vacations' in value ) {
-        let {startDate, endDate} = value.vacations.list[0];
+      if ( ('list' in value.vacations) ) {
+        let { list } = value.vacations;
+        let {startDate, endDate} = list[Object.keys(list)[0]];
         if((startDate <= endsAt && endDate >= startsAt) ||
            (endDate >= startsAt && startDate <= endsAt))  {
 
