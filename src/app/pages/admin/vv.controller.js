@@ -18,18 +18,18 @@ export default class VvController {
   setDateInfo() {
     let events = this.events = [];
     let {startsAt, endsAt} = this.newEvent;
-
     angular.forEach(this.awesomeThings, function (value) {
       if ( ('list' in value.vacations) ) {
         let { list } = value.vacations;
-        let {startDate, endDate} = list[Object.keys(list)[0]];
+        let {startDate, endDate, status} = list[Object.keys(list)[0]];
+        let typeEvent = {rejected:'warning',confirmed:'info'};
+        
         if((startDate <= endsAt && endDate >= startsAt) ||
            (endDate >= startsAt && startDate <= endsAt))  {
-
-          var event = 
+            var event = 
             {
               title: value.firstName + ' '+ value.lastName, // The title of the event 
-              type: 'info', // The type of the event (determines its color). Can be important, warning, info, inverse, success or special 
+              type: typeEvent[status], // The type of the event (determines its color). Can be important, warning, info, inverse, success or special 
               startsAt: new Date(startDate), // A javascript date object for when the event starts 
               endsAt: new Date(endDate), // Optional - a javascript date object for when the event ends 
               editable: false, // If edit-event-html is set and this field is explicitly set to false then dont make it editable. If set to false will also prevent the event from being dragged and dropped. 
