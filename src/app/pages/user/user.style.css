@@ -1,3 +1,9 @@
+.user-page__wrapper {
+	width: 95%;
+	margin: 0 auto;
+	padding: 50px 0 0;
+}
+
 .user-wrapper {
 	background: url('../../../assets/images/bg-body3.jpg') no-repeat;
 	background-size: cover;
