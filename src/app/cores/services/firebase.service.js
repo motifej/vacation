@@ -1,10 +1,10 @@
-/*global Firebase: false, $: false*/
+/*global Firebase: false, $: false, moment: false*/
 import * as actions from '../../constants/actions.const';
 import * as users  from '../../constants/users.consts';
 import { API_URL } from '../../constants/api.consts';
 
 export default class FirebaseService {
-	constructor ($firebaseArray, $firebaseObject, $firebase, $firebaseAuth, $q, $rootScope, $firebaseUtils, $timeout) {
+	constructor ($firebaseArray, $firebaseObject, $firebase, $firebaseAuth, $q, $rootScope, $firebaseUtils, $timeout, moment, $parse) {
 		'ngInject';
 		this.URL = API_URL;
 		this.$firebaseObject = $firebaseObject;
@@ -12,6 +12,7 @@ export default class FirebaseService {
 		this.$firebaseArray = $firebaseArray;
 		this.$firebaseUtils = $firebaseUtils;
 		this.toJSON = $firebaseUtils.toJSON;
+		this.$parse = $parse;
 		this.$q = $q;
 		this.$timeout = $timeout;
 		this.$rootScope = $rootScope;
@@ -73,9 +74,23 @@ export default class FirebaseService {
 	}
 
 	removeVacation(id) {
-		let ref = this.firebaseObj.child(this.authUser.data.uid).child('vacations').child('list');
-		ref.child(id).remove();
-
+		let deferred = this.$q.defer();
+		let vacationsRef = this.firebaseObj.child(this.authUser.data.uid).child('vacations');
+		this.$firebaseObject(vacationsRef).$loaded(
+			data => {
+				let vacation = this.$parse('list["' + id + '"]')(data);
+				if (data.list[id].status === 'confirmed') {
+					let startDate = vacation.startDate;
+					let endDate = vacation.endDate;
+					let retDays = (startDate && endDate) ? moment().isoWeekdayCalc(startDate, endDate, [1,2,3,4,5]) : 0;
+					data.total += retDays;
+					data.$save();
+				}
+				vacationsRef.child('list').child(id).remove();
+				deferred.resolve();
+			},
+			error => deferred.reject(error));
+		return deferred.promise;
 	}
 
 	createUserByEmail(newUser) {
