@@ -19,14 +19,19 @@ export default function dropdownListDirective() {
 
         link: function(scope){
             scope.chooseItem = function( item ){
+
+              let { list } = item.vacations;
+              let {startDate, endDate} = list[Object.keys(list)[0]];
+              
               scope.obj = item;
               scope.search = item.firstName +" "+ item.lastName;
+
               scope.showEvents = [
                   {
                     title: scope.search, // The title of the event 
                     type: 'info', // The type of the event (determines its color). Can be important, warning, info, inverse, success or special 
-                    startsAt: new Date(item.vacations.list[0].startDate), // A javascript date object for when the event starts 
-                    endsAt: new Date(item.vacations.list[0].endDate), // Optional - a javascript date object for when the event ends 
+                    startsAt: new Date(startDate), // A javascript date object for when the event starts 
+                    endsAt: new Date(endDate), // Optional - a javascript date object for when the event ends 
                     editable: false, // If edit-event-html is set and this field is explicitly set to false then dont make it editable. If set to false will also prevent the event from being dragged and dropped. 
                     deletable: false, // If delete-event-html is set and this field is explicitly set to false then dont make it deleteable 
                     resizable: true,
