@@ -1,7 +1,8 @@
 import * as roles  from './constants/roles.consts';
 import * as states  from './constants/routeStates.const';
 
-export default function routerConfig ($stateProvider, $urlRouterProvider) {
+
+export default function routerConfig ($stateProvider, $locationProvider, $urlRouterProvider) {
     'ngInject';
 
     $stateProvider
@@ -21,9 +22,11 @@ export default function routerConfig ($stateProvider, $urlRouterProvider) {
     .state(states.SITE, {
         'abstract': true,
         resolve: {
-            user : function (firebaseService) {
+            user : function (firebaseService, $state) {
                 'ngIngect'
-                return firebaseService.loadUser();
+                let loadUser = firebaseService.loadUser();
+                loadUser.catch( err => $state.go(states.ERRLOAD,{err: err}) );
+                return loadUser;
             }
         }
     })
@@ -81,7 +84,23 @@ export default function routerConfig ($stateProvider, $urlRouterProvider) {
             controllerAs: 'manager'
             }
         }
+    })
+    .state(states.ERRLOAD, {
+        url: '/',
+        data: {
+            roles: roles.USER
+        },
+        views: {
+          'content@': {
+            templateUrl: 'app/pages/error/errorload.html'
+            }
+        }
     });
+
+    // $locationProvider.html5Mode({
+    //   enabled: true,
+    //   requireBase: false
+    // });
 
     $urlRouterProvider.otherwise('/');
 

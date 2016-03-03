@@ -2,11 +2,15 @@
 	background: url('../../../assets/images/bg-body3.jpg') no-repeat;
 	background-size: cover;
 	color: #fff;
+	position: relative;
   height: calc(100vh - 51px);
 }
 
 .login-form-wrap{
-	margin-top: 15%;
+	position: absolute;
+	top: 45%;
+	left: 50%;
+	transform: translate(-50%,-50%);
 	border: 2px solid #fff;
 	border-radius: 4px;
 }
