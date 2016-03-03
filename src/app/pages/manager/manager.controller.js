@@ -40,7 +40,7 @@ export default class ManagerController {
     this.modal.open({
       templateUrl: '../app/pages/manager/newUserForm.html',
       controller: AddNewUserController,
-      controllerAs: 'user',
+      controllerAs: 'user'
     });
   }
 
