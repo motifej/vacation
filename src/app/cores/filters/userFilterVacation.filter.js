@@ -1,18 +1,20 @@
+import { filter } from 'lodash';
+
 export default function userFilterVacation() {
 	return function(input, status) {
 		if (input) {
 			switch (status) {
 				case 'requests':
-				return input.filter(function(item) {
-					return item.confirm == false;
+				return filter(input, function(item) {
+					return item.status == 'inprogress';
 				});
 				case 'approved':
-				return input.filter(function(item) {
-					return item.endDate > new Date() && item.confirm == true;
+				return filter(input, function(item) {
+					return item.endDate > new Date() && item.status == 'confirmed';
 				});
 				case 'spent':
-				return input.filter(function(item) {
-					return item.endDate < new Date() && item.confirm == true;
+				return filter(input, function(item) {
+					return item.endDate < new Date() && item.status == 'confirmed';
 				});
 			}
 		}

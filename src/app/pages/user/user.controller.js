@@ -1,5 +1,3 @@
-import {_remove} from 'lodash';
-
 export default class UserController {
 
   constructor ($scope, $log, firebaseService, moment, toastr, user) {
@@ -87,8 +85,6 @@ export default class UserController {
   }
 
   deleteVacation(item) {
-    _remove(this.user.vacations.list,
-      elem => item.id == elem.id);
+    this.firebaseService.removeVacation(item.id)
   }
-
 }

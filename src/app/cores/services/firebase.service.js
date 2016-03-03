@@ -10,6 +10,8 @@ export default class FirebaseService {
 		this.$firebaseObject = $firebaseObject;
 		this.$firebaseAuth = $firebaseAuth;
 		this.$firebaseArray = $firebaseArray;
+		this.$firebaseUtils = $firebaseUtils;
+		this.toJSON = $firebaseUtils.toJSON;
 		this.$q = $q;
 		this.$timeout = $timeout;
 		this.$rootScope = $rootScope;
@@ -17,15 +19,6 @@ export default class FirebaseService {
 		this.firebaseObj = new Firebase( this.URL );
 		this.authUser = $.jStorage.get( this.userStorageKey ) || { status:false, data: false };
 		this.userData = {};
-		this.$firebaseUtils = $firebaseUtils;
-	}
-
-	_getClearArray(arr) {
-		let newArr = [];
-		angular.forEach(arr, 
-			value => newArr.push(value)
-			);
-		return newArr;
 	}
 
 	_getCurrentUid() {
@@ -37,7 +30,6 @@ export default class FirebaseService {
 	}
 
 	getUsersList() {
-		let arr = this._getClearArray;
 		let deferred = this.$q.defer();
 		this.$firebaseArray( this.firebaseObj ).$loaded(
 			data =>	deferred.resolve( data ),
@@ -46,14 +38,13 @@ export default class FirebaseService {
 	}
 
 	loadUser() {
-		let obj = this.$firebaseUtils.toJSON;
 		let deferred = this.$q.defer();
 		let userRef = this.firebaseObj.child(this.authUser.data.uid);
-		let timeoutLoad = this.$timeout(deferred.reject, 5000);
+		let timeoutLoad = this.$timeout(deferred.reject, 10000);
 		this.$firebaseObject( userRef ).$loaded(
 			data => {
 				this.$timeout.cancel( timeoutLoad );
-				deferred.resolve( obj( data ) );
+				deferred.resolve( data );
 				this.$rootScope.$emit(actions.USERLOADED, data);
 			},
 			error => deferred.reject(error) );
@@ -62,7 +53,7 @@ export default class FirebaseService {
 
 	updateUserData(data) {
 		let deferred = this.$q.defer();
-		this.firebaseObj.update({ [data.uid]: this.$firebaseUtils.toJSON(data) }, 
+		this.firebaseObj.update({ [data.uid]: this.toJSON(data) }, 
 			error => {
 				if (error === null) {
 					deferred.resolve({status: true})
@@ -81,6 +72,12 @@ export default class FirebaseService {
 		refNewVacation.set(newVacation);
 	}
 
+	removeVacation(id) {
+		let ref = this.firebaseObj.child(this.authUser.data.uid).child('vacations').child('list');
+		ref.child(id).remove();
+
+	}
+
 	createUserByEmail(newUser) {
 		let deferred = this.$q.defer();
 		this.firebaseObj.createUser({
@@ -89,8 +86,8 @@ export default class FirebaseService {
 		}, (error, userData) => {
 			if (error === null) {
 				delete newUser.password;
-				let user = angular.extend(this.defaultData, newUser, {uid: userData.uid});
-				deferred.resolve(this.updateUserData(userData.uid, user))
+				let user = angular.extend(newUser, {uid: userData.uid});
+				deferred.resolve(this.updateUserData( user ))
 			} else {
 				deferred.reject({
 					status: false,
@@ -123,7 +120,7 @@ export default class FirebaseService {
 			};
 			_this.userData = data;
 			deferred.resolve(_this.authUser);
-			$.jStorage.set(_this.userStorageKey, _this.authUser);
+			$.jStorage.set(_this.userStorageKey, _this.toJSON(_this.authUser));
 		}
 		
 		function signInError(error){
@@ -161,7 +158,7 @@ export default class FirebaseService {
 				data: (data == null) ? {} : data,
 				role: this.authUser.role
 			};
-			$.jStorage.set(this.userStorageKey, this.authUser);
+			$.jStorage.set(this.userStorageKey, this.toJSON(this.authUser));
 		}
 		return this.authUser.status;
 	}
