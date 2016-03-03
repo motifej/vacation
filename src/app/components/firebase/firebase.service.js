@@ -1,13 +1,15 @@
 /*global Firebase: false, $: false*/
 import * as actions from '../../constants/actions.const';
 import * as users  from '../../constants/users.consts';
+import { API_URL } from '../../constants/api.consts';
 
 export default class FirebaseService {
-	constructor ($firebaseObject, $firebase, $firebaseAuth, $q, $rootScope, $firebaseUtils, $timeout) {
+	constructor ($firebaseArray, $firebaseObject, $firebase, $firebaseAuth, $q, $rootScope, $firebaseUtils, $timeout) {
 		'ngInject';
-		this.URL = 'https://vivid-fire-3850.firebaseio.com/users';
+		this.URL = API_URL;
 		this.$firebaseObject = $firebaseObject;
 		this.$firebaseAuth = $firebaseAuth;
+		this.$firebaseArray = $firebaseArray;
 		this.$q = $q;
 		this.$timeout = $timeout;
 		this.$rootScope = $rootScope;
@@ -22,7 +24,7 @@ export default class FirebaseService {
 		let newArr = [];
 		angular.forEach(arr, 
 			value => newArr.push(value)
-		);
+			);
 		return newArr;
 	}
 
@@ -37,8 +39,8 @@ export default class FirebaseService {
 	getUsersList() {
 		let arr = this._getClearArray;
 		let deferred = this.$q.defer();
-		this.$firebaseObject( this.firebaseObj ).$loaded(
-			data =>	deferred.resolve( arr(data) ),
+		this.$firebaseArray( this.firebaseObj ).$loaded(
+			data =>	deferred.resolve( data ),
 			error => deferred.reject(error) );
 		return deferred.promise;
 	}
@@ -68,8 +70,15 @@ export default class FirebaseService {
 					deferred.reject({status: false, error: error})
 				}
 			}
-		);
+			);
 		return deferred.promise;
+	}
+
+	createNewVacation(data) {
+		let ref = this.firebaseObj.child(this.authUser.data.uid).child('vacations').child('list');
+		let refNewVacation = ref.push();
+		let newVacation = angular.extend(data, {id: refNewVacation.key()});
+		refNewVacation.set(newVacation);
 	}
 
 	createUserByEmail(newUser) {
@@ -79,6 +88,7 @@ export default class FirebaseService {
 			password : newUser.password
 		}, (error, userData) => {
 			if (error === null) {
+				delete newUser.password;
 				let user = angular.extend(this.defaultData, newUser, {uid: userData.uid});
 				deferred.resolve(this.updateUserData(userData.uid, user))
 			} else {

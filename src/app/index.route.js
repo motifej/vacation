@@ -1,6 +1,7 @@
 import * as roles  from './constants/roles.consts';
 import * as states  from './constants/routeStates.const';
 
+
 export default function routerConfig ($stateProvider, $locationProvider, $urlRouterProvider) {
     'ngInject';
 
