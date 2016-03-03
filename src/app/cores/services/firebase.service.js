@@ -20,14 +20,6 @@ export default class FirebaseService {
 		this.$firebaseUtils = $firebaseUtils;
 	}
 
-	_getClearArray(arr) {
-		let newArr = [];
-		angular.forEach(arr, 
-			value => newArr.push(value)
-			);
-		return newArr;
-	}
-
 	_getCurrentUid() {
 		return this.authUser.data.uid;
 	}
@@ -37,7 +29,6 @@ export default class FirebaseService {
 	}
 
 	getUsersList() {
-		let arr = this._getClearArray;
 		let deferred = this.$q.defer();
 		this.$firebaseArray( this.firebaseObj ).$loaded(
 			data =>	deferred.resolve( data ),
@@ -49,7 +40,7 @@ export default class FirebaseService {
 		let obj = this.$firebaseUtils.toJSON;
 		let deferred = this.$q.defer();
 		let userRef = this.firebaseObj.child(this.authUser.data.uid);
-		let timeoutLoad = this.$timeout(deferred.reject, 5000);
+		let timeoutLoad = this.$timeout(deferred.reject, 10000);
 		this.$firebaseObject( userRef ).$loaded(
 			data => {
 				this.$timeout.cancel( timeoutLoad );
@@ -79,6 +70,11 @@ export default class FirebaseService {
 		let refNewVacation = ref.push();
 		let newVacation = angular.extend(data, {id: refNewVacation.key()});
 		refNewVacation.set(newVacation);
+	}
+
+	removeVacation(id) {
+		let ref = this.firebaseObj.child(this.authUser.data.uid).child('vacations').child('list');
+		ref.child(id).remove();
 	}
 
 	createUserByEmail(newUser) {
