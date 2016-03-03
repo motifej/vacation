@@ -16,8 +16,8 @@ export default class VvController {
   }
 
   setDateInfo() {
-    let events = this.events;
-    let { startsAt, endsAt} = this.newEvent;
+    let events = this.events = [];
+    let {startsAt, endsAt} = this.newEvent;
 
     angular.forEach(this.awesomeThings, function (value) {
       if ( 'vacations' in value ) {
