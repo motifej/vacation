@@ -41,11 +41,6 @@ export default class ManagerController {
       templateUrl: '../app/pages/manager/newUserForm.html',
       controller: AddNewUserController,
       controllerAs: 'user',
-      resolve: {
-        items: function () {
-          return this;
-        }
-      }
     });
   }
 

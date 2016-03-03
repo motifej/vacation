@@ -30,7 +30,7 @@
         <div class="vacations" ng-repeat="user in manager.users | filter:manager.filter">
           <div class="col-md-4" ng-repeat="(key, item) in user.vacations.list | statusFilter:'status':manager.statusFilter.status">
             <div class="panel m-panel">
-              <div class="panel-heading m-panel-head">{{user.firstName + " " + user.lastName}}</div>
+              <div class="panel-heading m-panel-head">{{user.firstName + " " + user.lastName}} <span class="m-vacation-group">{{user.group}}</span></div>
               <div class="panel-body m-panel-body">
                 <div class="vacation-data well">
                   <span>from {{item.startDate | date:'dd-MM-yyyy'}}</span>
