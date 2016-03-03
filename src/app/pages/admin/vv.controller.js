@@ -22,16 +22,21 @@ export default class VvController {
     _this.events = [];
     angular.forEach(this.awesomeThings, function(value){
 
+      var startDateBase = _this.truncateTime(value.vacations.list[0].startDate);
+      var startDateCalendar = _this.truncateTime(_this.newEvent.startsAt);
+      var endDateBase = _this.truncateTime(value.vacations.list[0].endDate);
+      var endDateCalendar = _this.truncateTime(_this.newEvent.endsAt);
+    
       if ( !('vacations' in value) ) {
         return
       }else 
       {
-        if(value.vacations.list[0].startDate >= _this.newEvent.startsAt &&
-         value.vacations.list[0].startDate <= _this.newEvent.endsAt) {
+        if((startDateBase <= endDateCalendar && endDateBase >= startDateCalendar) ||
+           (endDateBase >= startDateCalendar && startDateBase <= endDateCalendar))  {
 
-          let events = 
-        {
-              title: value.firstName, // The title of the event 
+          var events = 
+            {
+              title: value.firstName + ' '+ value.lastName, // The title of the event 
               type: 'info', // The type of the event (determines its color). Can be important, warning, info, inverse, success or special 
               startsAt: new Date(value.vacations.list[0].startDate), // A javascript date object for when the event starts 
               endsAt: new Date(value.vacations.list[0].endDate), // Optional - a javascript date object for when the event ends 
@@ -45,14 +50,21 @@ export default class VvController {
         }
       });
   }
+
   activate(firebaseService) {
     var _this = this;
     firebaseService.getUsersList().then( d => {
       _this.awesomeThings = d;
-
       _this.oneThing = d[0];
-
     });
+  }
+
+  truncateTime(dateValue) {
+    var dateValue = new Date(dateValue);
+    var dayValue = dateValue.getDate();
+    var monthValue = dateValue.getMonth();
+    var yearValue = dateValue.getFullYear();
+    return new Date(yearValue,monthValue,dayValue);
   }
 
 }
