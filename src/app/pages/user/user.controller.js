@@ -9,79 +9,85 @@ export default class UserController {
     $scope.minEndDate = $scope.startDate;
 
     this.user = user;
+    this.vacationsHistory = [];
     this.$scope = $scope;
     this.toastr = toastr;
     this.moment = moment;
     this.log = $log;
     this.firebaseService = firebaseService;
-    this.vacations = [];
     this.activate($scope);
 
   }
 
   activate(scope) {
+
+<<<<<<< HEAD
+    let list = this.user.vacations.list;
+
+    if (list) {
+      for (let item in list) {
+      this.vacationsHistory.push({startDate: list[item].startDate, endDate: list[item].endDate, status: list[item].status, commentary: list[item].commentary});
+      }
+    }
+
+=======
+>>>>>>> fc81da87da955e5e9ab7bdd80dcfa28af4fb6a61
     scope.$watch('startDate', function() {
-      scope.endDate = scope.startDate;
+      if (scope.endDate <= scope.startDate) scope.endDate = scope.startDate;
       scope.minEndDate = scope.startDate;
     });
 
   }
 
   submitHandler(startDate, endDate) {
+
+
+    let sDate = new Date(startDate).getTime();
+    let eDate = new Date(endDate).getTime();
+
     let vm = this;
-
     let toastrOptions = {progressBar: false};
-
-    this.log.debug(this.vacations);
+    let vacation;
 
     if (this.$scope.userForm.$invalid) return;
 
-    if (isCrossingIntervals(this.vacations)) {
-      this.toastr.error('Пересечение интервалов', toastrOptions);
+    if (isCrossingIntervals(vm.vacationsHistory)) {
+      this.toastr.error('Промежутки отпусков совпадают c предыдущими заявками!', toastrOptions);
       return;
     }
 
-    // this.log.debug(this.user);
-    
-    this.firebaseService.createNewVacation({
-      startDate: startDate,
-      endDate: endDate,
+    vacation = {
+      startDate: sDate,
+      endDate: eDate,
       status: 'inprogress',
       commentary: null
-    });
+    };
 
-    this.vacations.push({startDate, endDate});
-    // this.$scope.$emit('vacationWasSent', {startDate, endDate});
+    this.vacationsHistory.push(vacation);
+    this.firebaseService.createNewVacation(vacation);
+
     this.toastr.success('Заявка успешно отправлена!', toastrOptions);
 
     function isCrossingIntervals(dateIntervals) {
-
       if(dateIntervals.length === 0) return false;
-      // console.log(vm.moment("2016-03-01").from(vm.moment("2016-03-04")));
 
-      let test =  !!dateIntervals.filter(function(item) {
-
-        // console.log(parseInt(vm.moment(startDate).from(vm.moment(startDate))
-
-        if (vm.moment(startDate).from(vm.moment(startDate) && startDate <= item.endDate)) return true;
-        // return endDate <= item.endDate;
+      let result = dateIntervals.filter(function(item) {
+        if  (vm.moment(sDate).diff(vm.moment(item.startDate)) >= 0
+              && vm.moment(item.endDate).diff(vm.moment(sDate)) >= 0
+              || vm.moment(item.startDate).diff(vm.moment(eDate)) <= 0
+              && vm.moment(item.endDate).diff(vm.moment(eDate)) >= 0) {
+          return true;
+        }
       });
 
-      return test;
+      return result.length !== 0;
+
     }
   }
 
   calcDays() {
-    let result = this.moment(this.$scope.startDate).from(this.moment(this.$scope.endDate));
-
-    if(result.indexOf('a day') >=0) {
-      return result = 2;
-    }
-    if(!isNaN(parseInt(result))) {
-      return parseInt(result) + 1;
-    }
-    return result = 1;
-
+    let result = this.moment(this.$scope.endDate).diff(this.moment(this.$scope.startDate));
+    return new Date(result).getDate();
   }
 
   deleteVacation(item) {
