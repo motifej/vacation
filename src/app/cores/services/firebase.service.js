@@ -85,8 +85,8 @@ export default class FirebaseService {
 		}, (error, userData) => {
 			if (error === null) {
 				delete newUser.password;
-				let user = angular.extend(this.defaultData, newUser, {uid: userData.uid});
-				deferred.resolve(this.updateUserData(userData.uid, user))
+				let user = angular.extend(newUser, {uid: userData.uid});
+				deferred.resolve(this.updateUserData( user ))
 			} else {
 				deferred.reject({
 					status: false,
