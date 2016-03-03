@@ -1,6 +1,7 @@
 import * as roles  from './constants/roles.consts';
 import * as states  from './constants/routeStates.const';
 
+
 export default function routerConfig ($stateProvider, $locationProvider, $urlRouterProvider) {
     'ngInject';
 
@@ -96,10 +97,10 @@ export default function routerConfig ($stateProvider, $locationProvider, $urlRou
         }
     });
 
-    $locationProvider.html5Mode({
-      enabled: true,
-      requireBase: false
-    });
+    // $locationProvider.html5Mode({
+    //   enabled: true,
+    //   requireBase: false
+    // });
 
     $urlRouterProvider.otherwise('/');
 
