@@ -97,10 +97,10 @@ export default function routerConfig ($stateProvider, $locationProvider, $urlRou
         }
     });
 
-    $locationProvider.html5Mode({
-      enabled: true,
-      requireBase: false
-    });
+    // $locationProvider.html5Mode({
+    //   enabled: true,
+    //   requireBase: false
+    // });
 
     $urlRouterProvider.otherwise('/');
 
