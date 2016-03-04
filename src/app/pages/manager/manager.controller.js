@@ -22,7 +22,7 @@ export default class ManagerController {
     confirmVacation(user, id) {
      var vacation = find(user.vacations.list, { id: id });
      vacation.status = status.CONFIRMED;
-     moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5]);
+     user.vacations.total -= moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5]);
      console.log(moment().isoWeekdayCalc(vacation.startDate,vacation.endDate,[1,2,3,4,5]));
       this.firebaseService.updateUserData(user);
     }
