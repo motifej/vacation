@@ -130,10 +130,10 @@
           <div class="user-wrapper">
             <div class="container user  col-md-10 col-md-offset-1">
               <form name="userForm" role="form" class="user-form col-md-12" novalidate ng-submit='userCtrl.submitHandler(userForm.startDate.$viewValue, userForm.endDate.$viewValue)'>
-                <legend class="user-form__title">Заявка на отпуск</legend>
+                <legend class="user-form__title">Vacation request</legend>
                 <div class="row">
                   <div class="form-group col-md-6">
-                    <label for="">Дата начала отпуска</label>
+                    <label for="">Start date</label>
                     <vac-datepicker class="datepicker"
                     name="startDate"
                     ng-model="startDate"
@@ -142,7 +142,7 @@
                     </vac-datepicker>
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="">Дата окончания отпуска</label>
+                    <label for="">End date</label>
                     <vac-datepicker class="datepicker"
                     name="endDate"
                     ng-model="endDate"
@@ -153,22 +153,22 @@
                 </div>
                 <div class="row">
                   <div class="form-group col-md-4">
-                    <label for="chosen">Выбрано дней</label>
-                    <input type="text" id="chosen" class="form-control user__total-days" disabled
+                    <label for="selected">Selected vacation days</label>
+                    <input type="text" id="selected" class="form-control user__total-days" disabled
                     ng-value="userCtrl.calcDays()">
                   </div>
                   <div class="form-group col-md-4">
-                    <label for="available">Доступно дней отпуска</label>
+                    <label for="available">Available days</label>
                     <input type="text" id="available" class="form-control user__left-days" disabled
                     ng-value="userCtrl.user.vacations.total || 0">
                   </div>
                   <div class="form-group col-md-4">
-                    <label for="dayoff">Доступно dayoff</label>
+                    <label for="dayoff">Available dayoffs</label>
                     <input type="text" id="dayoff" class="form-control user__left-days" disabled
                     ng-value="userCtrl.user.vacations.dayOff || 0">
                   </div>
                 </div>
-                <button type="submit" class="btn user-form__btn">Отправить</button>
+                <button type="submit" class="btn user-form__btn">Send</button>
               </form>
             </div>
           </div>
