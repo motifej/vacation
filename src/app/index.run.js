@@ -1,10 +1,9 @@
-export default function runBlock ($log, $rootScope, $state, firebaseService,toastr, permission) {
-  'ngInject';
-   
-  let destr = $rootScope.$on("$stateChangeStart", permission.init.bind(permission));
+/*eslint-disable */
+export default function runBlock ($log, $rootScope, permission) {
+	'ngInject';
 
-  $rootScope.$on('$destroy', destr);
+	$rootScope.$on("$stateChangeStart", permission.init);
 
-  $log.debug('runBlock end');
+	$log.debug('runBlock end');
 
 }

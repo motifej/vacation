@@ -1,8 +1,7 @@
 import * as roles  from './constants/roles.consts';
 import * as states  from './constants/routeStates.const';
 
-
-export default function routerConfig ($stateProvider, $locationProvider, $urlRouterProvider) {
+export default function routerConfig ($stateProvider, $locationProvider, $urlRouterProvider, firebaseResolverProvider) {
     'ngInject';
 
     $stateProvider
@@ -22,12 +21,7 @@ export default function routerConfig ($stateProvider, $locationProvider, $urlRou
     .state(states.SITE, {
         'abstract': true,
         resolve: {
-            user : function (firebaseService, $state) {
-                'ngIngect'
-                let loadUser = firebaseService.loadUser();
-                loadUser.catch( err => $state.go(states.ERRLOAD,{err: err}) );
-                return loadUser;
-            }
+            user : firebaseResolverProvider.loadUser
         }
     })
     .state(states.HOME, {
@@ -51,10 +45,7 @@ export default function routerConfig ($stateProvider, $locationProvider, $urlRou
             roles: roles.ADMIN
         },
         resolve: {
-            userList : function (firebaseService) {
-                'ngIngect'
-                return firebaseService.getUsersList();
-            }
+            userList : firebaseResolverProvider.getUsersList
         },
         views: {
           'content@': {
@@ -71,10 +62,7 @@ export default function routerConfig ($stateProvider, $locationProvider, $urlRou
             roles: roles.MANAGER
         },
         resolve: {
-            userList : function (firebaseService) {
-                'ngIngect'
-                return firebaseService.getUsersList();
-            }
+           userList : firebaseResolverProvider.getUsersList
         },
 
         views: {
@@ -86,7 +74,6 @@ export default function routerConfig ($stateProvider, $locationProvider, $urlRou
         }
     })
     .state(states.ERRLOAD, {
-        url: '/',
         data: {
             roles: roles.USER
         },

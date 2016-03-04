@@ -7,6 +7,7 @@ import LoginController from './pages/login/login.controller';
 import UserController from './pages/user/user.controller';
 import FirebaseService from './cores/services/firebase.service';
 import PermissionService from './cores/services/persmissions.service';
+import FirebaseResolverProvider from './cores/prividers/firebaseResolver.provider';
 import NavbarDirective from './components/navbar/navbar.directive';
 import DatepickerDirective from './components/datepicker/datepicker.directive';
 import dropdownListDirective from './components/dropdown/vv.dropdown.directive';
@@ -24,6 +25,7 @@ angular.module('vacation', ['ngAnimate', 'ngMessages', 'ui.router', 'ui.bootstra
   .run(runBlock)
   .service('firebaseService', FirebaseService)
   .service('permission', PermissionService)
+  .provider('firebaseResolver', FirebaseResolverProvider)
   .filter('userFilterVacation', userFilterVacation)
   .filter('phoneFilter', phoneFilter)
   .filter('statusFilter', statusFilter)
