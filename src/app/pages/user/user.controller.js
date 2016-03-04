@@ -85,6 +85,6 @@ export default class UserController {
   }
 
   deleteVacation(item) {
-    this.firebaseService.removeVacation(item.id)
+    this.firebaseService.removeVacation(item.id);
   }
 }
