@@ -28,11 +28,11 @@ export default class UserController {
   }
 
   submitHandler(startDate, endDate) {
-
-    let sDate = new Date(startDate).getTime();
-    let eDate = new Date(endDate).getTime();
+    this.log.info(this.user);
 
     let vm = this;
+    let sDate = new Date(startDate).getTime();
+    let eDate = new Date(endDate).getTime();
     let toastrOptions = {progressBar: false};
     let vacation;
     let list = this.user.vacations.list;
@@ -40,12 +40,13 @@ export default class UserController {
 
     if (list) {
       for (let item in list) {
-      vm.vacations.push({startDate: list[item].startDate, endDate: list[item].endDate, status: list[item].status, commentary: list[item].commentary});
+        if (list[item].status === 'rejected') continue;
+        vm.vacations.push({startDate: list[item].startDate, endDate: list[item].endDate, status: list[item].status, commentary: list[item].commentary});
       }
     }
 
     if (this.$scope.userForm.$invalid) return;
-    console.log(list);
+
     if (list && isCrossingIntervals(vm.vacations)) {
       this.toastr.error('Промежутки отпусков совпадают c предыдущими заявками!', toastrOptions);
       return;
@@ -80,8 +81,7 @@ export default class UserController {
   }
 
   calcDays() {
-    let result = this.moment(this.$scope.endDate).diff(this.moment(this.$scope.startDate));
-    return new Date(result).getDate();
+    return this.moment().isoWeekdayCalc(this.$scope.startDate, this.$scope.endDate, [1,2,3,4,5]);
   }
 
   deleteVacation(item) {

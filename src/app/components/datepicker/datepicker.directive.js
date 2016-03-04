@@ -39,9 +39,9 @@ export default function DatepickerDirective() {
             opened: false
         };
 
-        var tomorrow = new Date();
+        let tomorrow = new Date();
         tomorrow.setDate(tomorrow.getDate() + 1);
-        var afterTomorrow = new Date();
+        let afterTomorrow = new Date();
         afterTomorrow.setDate(tomorrow.getDate() + 1);
         scope.events =
         [
