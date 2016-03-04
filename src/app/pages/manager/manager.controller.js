@@ -2,6 +2,7 @@
  import * as status from '../../constants/status.consts';
  import { groups } from '../../constants/groups.consts';
  import AddNewUserController from './addNewUser.controller'
+ import UserInfoController from './userInfo.controller'
 
 export default class ManagerController {
   constructor ($scope, $timeout, firebaseService, userList, $modal, moment) {
@@ -40,11 +41,21 @@ export default class ManagerController {
       this.statusFilter.status = filter;
     }
     openNewUserForm() {
-    this.modal.open({
-      templateUrl: '../app/pages/manager/newUserForm.html',
-      controller: AddNewUserController,
-      controllerAs: 'user'
-    });
-  }
+      this.modal.open({
+        templateUrl: '../app/pages/manager/newUserForm.html',
+        controller: AddNewUserController,
+        controllerAs: 'user'
+      });
+    }
+    userInfo(user) {
+      this.modal.open({
+        templateUrl: '../app/pages/manager/userInfo.html',
+        controller: UserInfoController,
+        controllerAs: 'info',
+        resolve: {
+          user: user
+        }
+      });
+    }
 
 } 

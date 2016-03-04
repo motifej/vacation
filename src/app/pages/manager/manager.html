@@ -24,17 +24,17 @@
           <label class="btn btn-primary m-button-gray" ng-class="{'m-button-black': manager.statusFilter.status == 'rejected'}" ng-click="manager.choiceButtonFilter('rejected')">Rejected</label>
           <label class="btn btn-primary m-button-gray" ng-class="{'m-button-black': !manager.statusFilter.status}" ng-click="manager.choiceButtonFilter()">All</label>
       </div>
-      <button class="btn btn-primary m-add-user" ng-click="manager.openNewUserForm()">Add User</button>
+      <button class="btn btn-primary m-button-user" ng-click="manager.openNewUserForm()">Add User</button>
       <hr>
       <div class="row">
         <div class="vacations" ng-repeat="user in manager.users | filter:manager.filter">
           <div class="col-md-4" ng-repeat="(key, item) in user.vacations.list | statusFilter:'status':manager.statusFilter.status">
             <div class="panel m-panel">
-              <div class="panel-heading m-panel-head">{{user.firstName + " " + user.lastName}} <span class="m-vacation-group">{{user.group}}</span></div>
+              <div class="panel-heading m-panel-head"><span>{{user.firstName + " " + user.lastName}} <span class="m-vacation-group">{{user.group}}</span></span><div class="btn btn-xs btn-primary m-button-user" ng-click="manager.userInfo(user)">Info</div></div>
               <div class="panel-body m-panel-body">
                 <div class="vacation-data well">
-                  <span>from {{item.startDate | date:'dd-MM-yyyy'}}</span>
-                  <span>to {{item.endDate | date:'dd-MM-yyyy'}}</span>
+                  <span>from {{item.startDate | date:'dd MMMM yyyy'}}</span>
+                  <span>to {{item.endDate | date:'dd MMMM yyyy'}}</span>
                 </div>
                 <div class="buttons-wrapper">
                   <button ng-disabled="item.status!='inprogress'" class="btn btn-primary col-md-offset-2" ng-click="manager.confirmVacation(user, item.id)">Confirm</button>
