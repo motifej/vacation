@@ -1,5 +1,6 @@
 .datepicker {
 	display: block;
+	color: black;
 }
 .datepicker__input::-webkit-calendar-picker-indicator,
 .datepicker__input::-webkit-inner-spin-button {

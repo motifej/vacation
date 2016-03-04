@@ -9,7 +9,6 @@ export default class UserController {
     $scope.minEndDate = $scope.startDate;
 
     this.user = user;
-    this.vacationsHistory = [];
     this.$scope = $scope;
     this.toastr = toastr;
     this.moment = moment;
@@ -21,14 +20,6 @@ export default class UserController {
 
   activate(scope) {
 
-    let list = this.user.vacations.list;
-
-    if (list) {
-      for (let item in list) {
-      this.vacationsHistory.push({startDate: list[item].startDate, endDate: list[item].endDate, status: list[item].status, commentary: list[item].commentary});
-      }
-    }
-
     scope.$watch('startDate', function() {
       if (scope.endDate <= scope.startDate) scope.endDate = scope.startDate;
       scope.minEndDate = scope.startDate;
@@ -38,17 +29,24 @@ export default class UserController {
 
   submitHandler(startDate, endDate) {
 
-
     let sDate = new Date(startDate).getTime();
     let eDate = new Date(endDate).getTime();
 
     let vm = this;
     let toastrOptions = {progressBar: false};
     let vacation;
+    let list = this.user.vacations.list;
+    vm.vacations = [];
+
+    if (list) {
+      for (let item in list) {
+      vm.vacations.push({startDate: list[item].startDate, endDate: list[item].endDate, status: list[item].status, commentary: list[item].commentary});
+      }
+    }
 
     if (this.$scope.userForm.$invalid) return;
-
-    if (isCrossingIntervals(vm.vacationsHistory)) {
+    console.log(list);
+    if (list && isCrossingIntervals(vm.vacations)) {
       this.toastr.error('Промежутки отпусков совпадают c предыдущими заявками!', toastrOptions);
       return;
     }
@@ -60,7 +58,6 @@ export default class UserController {
       commentary: null
     };
 
-    this.vacationsHistory.push(vacation);
     this.firebaseService.createNewVacation(vacation);
 
     this.toastr.success('Заявка успешно отправлена!', toastrOptions);
