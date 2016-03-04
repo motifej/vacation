@@ -1,41 +1,40 @@
-import { get } from 'lodash';
 import * as routeStates  from '../../constants/routeStates.const';
 import { ANONIM }  from '../../constants/roles.consts';
 
+let _this = {};
+
 export default class PermissionService {
-	constructor ($rootScope, $state, firebaseService, toastr) {
+	constructor ($rootScope, $state, firebaseService, toastr, $parse) {
 		'ngInject';
 		
-		this.firebaseService = firebaseService;
-		this.$rootScope = $rootScope;
-		this.$state = $state;
-		this.toastr = toastr;
+		_this.firebaseService = firebaseService;
+		_this.$rootScope = $rootScope;
+		_this.$state = $state;
+		_this.toastr = toastr;
+    _this.$parse = $parse;
 		
 	}
 
+
 	init (event, toState, toParams, fromState) {
-				let _get = get;
-        let roles = _get(toState, 'data.roles') || ANONIM;
+        let roles = _this.$parse('data.roles')(toState) || ANONIM;
         if( !roles.length ){
-          this.$rootScope.error = "Access undefined for this state";
-          this.toastr.error(this.$rootScope.error);
+          _this.toastr.error(this.$rootScope.error);
           event.preventDefault();
           return;
         }
 
-        if ( this.firebaseService.checkPersmissions(roles) ) {
+        if ( _this.firebaseService.checkPersmissions(roles) ) {
           return;
         }
 
-        this.$rootScope.error = "Seems like you tried accessing a route you don't have access to...";
         event.preventDefault();
 
         if( fromState.url === '^' ) {
-            if( this.firebaseService.getAuthUser() ) {
-                this.$state.go(routeStates.HOME);
+            if( _this.firebaseService.getAuthUser() ) {
+                _this.$state.go(routeStates.HOME);
             } else {
-                this.$rootScope.error = null;
-                this.$state.go(routeStates.LOGIN);
+                _this.$state.go(routeStates.LOGIN);
             }
         }
     }

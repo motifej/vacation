@@ -1,3 +1,17 @@
 .main-navbar{
 	margin: 0;
 }
+
+.logout__dropdown{
+	cursor: pointer;
+	text-align: center;
+	font-weight: bold;
+	letter-spacing: 2px;
+	line-height: 30px;
+	color: #9d9d9d;
+	background: #000;
+	border: solid #fff 1px;
+}
+.logout__dropdown:hover{
+	color: #fff;
+}

@@ -1,15 +1,15 @@
 <div class="user-page__wrapper">
   <div class="row">
 
-    <div class="col-sm-4 col-md-4">
+    <div class="col-md-4">
       <div class="panel-group">
 
         <accordion>
           <accordion-group is-open="isCollapsed" class="panel panel-warning">
             <accordion-heading ng-click="isCollapsed = !isCollapsed">
-              <div>
-                <span class="glyphicon glyphicon-folder-open"></span>
-                <span>Vacation Requests</span>
+              <div class="row">
+                <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-folder-open"></span></div>
+                <div class="col-xs-10 text-center"><span>Vacation Requests</span></div>
               </div>
             </accordion-heading>
             <table class="table table-hover">
@@ -36,18 +36,17 @@
         <accordion>
           <accordion-group is-open="isCollapsed" class="panel panel-danger">
             <accordion-heading ng-click="isCollapsed = !isCollapsed">
-              <div>
-                <span class="glyphicon glyphicon-remove"></span>
-                <span>Rejected Vacations</span>
+              <div class="row">
+                <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-remove"></span></div>
+                <div class="col-xs-10 text-center"><span>Rejected Vacations</span></div>
               </div>
             </accordion-heading>
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th class="col-md-1 text-center">№</th>
+                  <th class="col-md-2 text-center">№</th>
                   <th class="col-md-5 text-center">Start vacation</th>
                   <th class="col-md-5 text-center">End vacation</th>
-                  <th class="col-md-1 text-center">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -55,7 +54,6 @@
                   <td class="col-md-1 text-center">{{$index+1}}</td>
                   <td class="col-md-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
                   <td class="col-md-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
-                  <td class="col-md-1 text-center"><a class="btn btn-danger btn-xs" ng-click="userCtrl.deleteVacation(item)"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
                 </tr>
               </tbody>
             </table>
@@ -65,9 +63,9 @@
         <accordion>
           <accordion-group is-open="isCollapsed" class="panel panel-success">
             <accordion-heading ng-click="isCollapsed = !isCollapsed">
-              <div>
-                <span class="glyphicon glyphicon-ok"></span>
-                <span>Approved Vacation</span>
+              <div class="row">
+                <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-ok"></span></div>
+                <div class="col-xs-10 text-center"><span>Approved Vacation</span></div>
               </div>
             </accordion-heading>
             <table class="table table-hover">
@@ -84,7 +82,7 @@
                   <td class="col-md-1 text-center">{{$index+1}}</td>
                   <td class="col-md-5 text-center">{{item.startDate | date:'dd-MM-yyyy'}}</td>
                   <td class="col-md-5 text-center">{{item.endDate | date:'dd-MM-yyyy'}}</td>
-                  <td class="col-md-1 text-center"><a class="btn btn-danger btn-xs" ng-click="userCtrl.deleteVacation(item)"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
+                  <td class="col-md-1 text-center"><a class="btn btn-danger btn-xs" ng-click="userCtrl.deleteVacation(item)" ng-show="item.startDate > startDate"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
                 </tr>
               </tbody>
             </table>
@@ -94,15 +92,15 @@
         <accordion>
           <accordion-group is-open="isCollapsed" class="panel panel-primary">
             <accordion-heading ng-click="isCollapsed = !isCollapsed">
-              <div>
-                <span class="glyphicon glyphicon-lock"></span>
-                <span class="text-center">Spent Vacations</span>
+              <div class="row">
+                <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-lock"></span></div>
+                <div class="col-xs-10 text-center"><span>Spent Vacations</span></div>
               </div>
             </accordion-heading>
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th class="col-md-1 text-center">№</th>
+                  <th class="col-md-2 text-center">№</th>
                   <th class="col-md-5 text-center">Start vacation</th>
                   <th class="col-md-5 text-center">End vacation</th>
                 </tr>
@@ -121,7 +119,7 @@
       </div>
     </div>
 
-    <div class="col-sm-8 col-md-8">
+    <div class="col-md-8">
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">Dashboard</h3>
@@ -130,10 +128,10 @@
           <div class="user-wrapper">
             <div class="container user  col-md-10 col-md-offset-1">
               <form name="userForm" role="form" class="user-form col-md-12" novalidate ng-submit='userCtrl.submitHandler(userForm.startDate.$viewValue, userForm.endDate.$viewValue)'>
-                <legend class="user-form__title">Заявка на отпуск</legend>
+                <legend class="user-form__title">Vacation request</legend>
                 <div class="row">
                   <div class="form-group col-md-6">
-                    <label for="">Дата начала отпуска</label>
+                    <label for="">Start date</label>
                     <vac-datepicker class="datepicker"
                     name="startDate"
                     ng-model="startDate"
@@ -142,7 +140,7 @@
                     </vac-datepicker>
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="">Дата окончания отпуска</label>
+                    <label for="">End date</label>
                     <vac-datepicker class="datepicker"
                     name="endDate"
                     ng-model="endDate"
@@ -153,22 +151,22 @@
                 </div>
                 <div class="row">
                   <div class="form-group col-md-4">
-                    <label for="chosen">Выбрано дней</label>
-                    <input type="text" id="chosen" class="form-control user__total-days" disabled
+                    <label for="selected">Selected vacation days</label>
+                    <input type="text" id="selected" class="form-control user__total-days" disabled
                     ng-value="userCtrl.calcDays()">
                   </div>
                   <div class="form-group col-md-4">
-                    <label for="available">Доступно дней отпуска</label>
+                    <label for="available">Available days</label>
                     <input type="text" id="available" class="form-control user__left-days" disabled
                     ng-value="userCtrl.user.vacations.total || 0">
                   </div>
                   <div class="form-group col-md-4">
-                    <label for="dayoff">Доступно dayoff</label>
+                    <label for="dayoff">Available dayoffs</label>
                     <input type="text" id="dayoff" class="form-control user__left-days" disabled
                     ng-value="userCtrl.user.vacations.dayOff || 0">
                   </div>
                 </div>
-                <button type="submit" class="btn user-form__btn">Отправить</button>
+                <button type="submit" class="btn user-form__btn">Send</button>
               </form>
             </div>
           </div>
